@@ -11,21 +11,27 @@ context.lineCap = 'round';
 
 let shouldPaint = false;
 
-document.addEventListener('mousedown', function(event) {
-  shouldPaint = true;
-  context.moveTo(event.pageX, event.pageY);
-  context.beginPath();
+['mousedown', 'touchstart'].forEach(function(e) {
+  document.addEventListener(e, function(event) {
+    shouldPaint = true;
+    context.moveTo(event.pageX, event.pageY);
+    context.beginPath();
+  });
 });
 
-document.addEventListener('mouseup', function(event) {
-  shouldPaint = false;
+['mouseup', 'touchend'].forEach(function(e) {
+  document.addEventListener(e, function(event) {
+    shouldPaint = false;
+  });
 });
 
-document.addEventListener('mousemove', function(event) {
-  if (shouldPaint) {
-    context.lineTo(event.pageX, event.pageY);
-    context.stroke();
-  }
+['mousemove', 'touchmove'].forEach(function(e) {
+  document.addEventListener(e, function(event) {
+    if (shouldPaint) {
+      context.lineTo(event.pageX, event.pageY);
+      context.stroke();
+    }
+  });
 });
 
 document.querySelectorAll('nav a').forEach(link => {
@@ -34,6 +40,7 @@ document.querySelectorAll('nav a').forEach(link => {
   });
 });
 
+// save canvas img
 function dlCanvas() {
   var dt = canvas.toDataURL('image/png');
   dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
