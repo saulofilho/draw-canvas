@@ -3,10 +3,13 @@ const canvas = document.querySelector('canvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+canvas.style.width = window.innerWidth + 'px';
+canvas.style.height = window.innerHeight + 'px';
+
 const context = canvas.getContext('2d');
 
-context.strokeStyle = 'wheat';
-context.lineWidth = 10;
+context.strokeStyle = '#ff00ff';
+context.lineWidth = 0.08;
 context.lineCap = 'round';
 
 let shouldPaint = false;
@@ -33,6 +36,17 @@ let shouldPaint = false;
     }
   });
 });
+
+window.onresize = function() {
+  let canvas = document.querySelector('canvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.width = window.innerWidth + 'px';
+  canvas.style.height = window.innerHeight + 'px';
+  context.strokeStyle = 'wheat';
+  context.lineWidth = Math.floor(Math.random() * 101);
+  context.lineCap = 'round';
+};
 
 document.querySelectorAll('nav a').forEach(link => {
   link.addEventListener('click', function(event) {
